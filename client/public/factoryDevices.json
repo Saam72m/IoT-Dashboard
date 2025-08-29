@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Door Sensor",
+    "isOn": true,
+    "isOnline": true,
+    "temp": 25,
+    "humidity": 40,
+    "battery": 90,
+    "x": 180,
+    "y": 310
+  },
+  {
+    "id": 2,
+    "name": "Temperature Sensor",
+    "isOn": false,
+    "isOnline": true,
+    "temp": 28,
+    "humidity": 38,
+    "battery": 80,
+    "x": 180,
+    "y": 50
+  },
+  {
+    "id": 3,
+    "name": "Humidity Sensor",
+    "isOn": true,
+    "isOnline": false,
+    "temp": 23,
+    "humidity": 50,
+    "battery": 70,
+    "x": 430,
+    "y": 410
+  },
+  {
+    "id": 4,
+    "name": "Light Sensor",
+    "isOn": false,
+    "isOnline": true,
+    "temp": 26,
+    "humidity": 35,
+    "battery": 85,
+    "x": 645,
+    "y": 50
+  },
+  {
+    "id": 5,
+    "name": "Motion Sensor",
+    "isOn": true,
+    "isOnline": false,
+    "temp": 24,
+    "humidity": 45,
+    "battery": 60,
+    "x": 645,
+    "y": 310
+  }
+]

@@ -1,0 +1,77 @@
+﻿.device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.device-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.device-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #fff;
+}
+
+    .status.online {
+        background-color: #28a745;
+    }
+
+    .status.offline {
+        background-color: #dc3545;
+    }
+
+.device-body {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.lamp {
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+    .lamp.on {
+        color: gold;
+    }
+
+    .lamp.off {
+        color: gray;
+    }
+
+    .lamp:hover {
+        transform: scale(1.1);
+    }
+
+.device-actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+    .device-actions button {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color: #f0f0f0;
+        transition: background 0.2s;
+    }
+
+        .device-actions button:hover {
+            background-color: #e0e0e0;
+        }

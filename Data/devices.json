@@ -1,0 +1,27 @@
+[
+  {
+    "Id": 2,
+    "Name": "Sensor A",
+    "IsOnline": true
+  },
+  {
+    "Id": 3,
+    "Name": "Sensor B",
+    "IsOnline": true
+  },
+  {
+    "Id": 4,
+    "Name": "Sensor D",
+    "IsOnline": false
+  },
+  {
+    "Id": 5,
+    "Name": "Sensor E",
+    "IsOnline": true
+  },
+  {
+    "Id": 6,
+    "Name": "Sensor F",
+    "IsOnline": false
+  }
+]

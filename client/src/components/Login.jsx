@@ -16,7 +16,7 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.post('https://localhost:7137/api/auth/login', {
+            const response = await axios.post('https://iot-backend-nehg.onrender.com/api/auth/login', {
                 username,
                 password
             });

@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const res = await axios.get("https://localhost:7137/api/devices", {
+                const res = await axios.get("https://iot-backend-nehg.onrender.com/api/devices", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setDevices(res.data.sort((a, b) => a.id - b.id));

@@ -1,7 +1,7 @@
 ﻿import axios from "axios";
 
 const API = axios.create({
-    baseURL: "https://localhost:7137/api",
+    baseURL: "https://iot-backend-nehg.onrender.com/api",
 });
 
 // درخواست‌ها → اضافه کردن توکن

@@ -45,7 +45,7 @@ const AddDeviceForm = ({ onDeviceAdded }) => {
         if (!name.trim()) return showToast("Device name cannot be empty.", "error");
         try {
             const res = await axios.post(
-                "https://localhost:7137/api/devices/add",
+                "https://iot-backend-nehg.onrender.com/api/devices/add",
                 {
                     name,
                     isOnline,
@@ -172,7 +172,7 @@ const DevicesPage = () => {
 
     const fetchDevices = async () => {
         try {
-            const res = await axios.get("https://localhost:7137/api/devices", {
+            const res = await axios.get("https://iot-backend-nehg.onrender.com/api/devices", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setDevices(res.data.sort((a, b) => a.id - b.id));
@@ -183,7 +183,7 @@ const DevicesPage = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://localhost:7137/api/devices/${id}`, {
+            await axios.delete(`https://iot-backend-nehg.onrender.com/api/devices/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             showToast("Device deleted successfully 🗑️", "success");
@@ -206,7 +206,7 @@ const DevicesPage = () => {
     const handleEditSave = async () => {
         try {
             await axios.put(
-                `https://localhost:7137/api/devices/${editingDeviceId}`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${editingDeviceId}`,
                 {
                     name: editName,
                     type: edittype,
@@ -242,7 +242,7 @@ const DevicesPage = () => {
     const toggleDeviceStatus = async (device) => {
         try {
             await axios.patch(
-                `https://localhost:7137/api/devices/${device.id}/status`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/status`,
                 JSON.stringify(!device.isOnline),
                 {
                     headers: {
@@ -264,7 +264,7 @@ const DevicesPage = () => {
     const togglePowerStatus = async (device) => {
         try {
             await axios.patch(
-                `https://localhost:7137/api/devices/${device.id}/power`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/power`,
                 JSON.stringify(!device.isOn),
                 {
                     headers: {

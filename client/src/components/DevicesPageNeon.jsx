@@ -57,7 +57,7 @@ const AddDeviceForm = ({ onDeviceAdded }) => {
                 isOn,
             };
 
-            const res = await axios.post("https://localhost:7137/api/devices/add", payload, {
+            const res = await axios.post("https://iot-backend-nehg.onrender.com/api/devices/add", payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -376,7 +376,7 @@ const DevicesPageNeon = () => {
 
     const fetchDevices = async () => {
         try {
-            const res = await axios.get("https://localhost:7137/api/devices", {
+            const res = await axios.get("https://iot-backend-nehg.onrender.com/api/devices", {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setDevices([...res.data].sort((a, b) => a.id - b.id));
@@ -387,7 +387,7 @@ const DevicesPageNeon = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`https://localhost:7137/api/devices/${id}`, {
+            await axios.delete(`https://iot-backend-nehg.onrender.com/api/devices/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             showToast("Device deleted successfully 🗑️", "success");
@@ -429,7 +429,7 @@ const DevicesPageNeon = () => {
                 // isOn را نمی‌فرستیم (فقط از /power تغییر می‌کنه)
             };
 
-            await axios.put(`https://localhost:7137/api/devices/${editingDeviceId}`, payload, {
+            await axios.put(`https://iot-backend-nehg.onrender.com/api/devices/${editingDeviceId}`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
@@ -444,7 +444,7 @@ const DevicesPageNeon = () => {
     const toggleDeviceStatus = async (device) => {
         try {
             await axios.patch(
-                `https://localhost:7137/api/devices/${device.id}/status`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/status`,
                 JSON.stringify(!device.isOnline),
                 { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
             );
@@ -457,7 +457,7 @@ const DevicesPageNeon = () => {
     const togglePowerStatus = async (device) => {
         try {
             await axios.patch(
-                `https://localhost:7137/api/devices/${device.id}/power`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/power`,
                 JSON.stringify(!device.isOn),
                 { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
             );

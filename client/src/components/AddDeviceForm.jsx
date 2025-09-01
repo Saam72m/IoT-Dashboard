@@ -19,7 +19,7 @@ const AddDeviceForm = ({ onDeviceAdded }) => {
 
         try {
             const res = await axios.post(
-                "https://localhost:7137/api/devices",
+                "https://iot-backend-nehg.onrender.com/api/devices",
                 { name, isOnline, isOn },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

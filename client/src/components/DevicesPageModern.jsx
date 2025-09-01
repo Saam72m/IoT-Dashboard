@@ -32,7 +32,7 @@ export default function DevicesPageModern() {
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const res = await axios.get("https://localhost:7137/api/devices", {
+                const res = await axios.get("https://iot-backend-nehg.onrender.com/api/devices", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setDevices(res.data);
@@ -70,7 +70,7 @@ export default function DevicesPageModern() {
 
         try {
             const res = await axios.post(
-                "https://localhost:7137/api/devices/add",
+                "https://iot-backend-nehg.onrender.com/api/devices/add",
                 newDevice,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -95,7 +95,7 @@ export default function DevicesPageModern() {
     const handleEdit = async () => {
         try {
             await axios.put(
-                `https://localhost:7137/api/devices/${editDevice.id}`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${editDevice.id}`,
                 editDevice,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -112,7 +112,7 @@ export default function DevicesPageModern() {
         if (!deleteConfirmId) return;
         try {
             await axios.delete(
-                `https://localhost:7137/api/devices/${deleteConfirmId}`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${deleteConfirmId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setDevices(devices.filter((d) => d.id !== deleteConfirmId));
@@ -131,8 +131,8 @@ export default function DevicesPageModern() {
 
             // برای isOnline و isOn جداگانه درخواست PATCH به بک‌اند
             const endpoint = field === "isOn"
-                ? `https://localhost:7137/api/devices/${device.id}/power`
-                : `https://localhost:7137/api/devices/${device.id}/status`;
+                ? `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/power`
+                : `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/status`;
 
             await axios.patch(endpoint, JSON.stringify(!device[field]), {
                 headers: {

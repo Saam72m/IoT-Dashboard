@@ -23,7 +23,7 @@ export default function DevicesPage() {
     useEffect(() => {
         const fetchDevices = async () => {
             try {
-                const res = await axios.get("https://localhost:7137/api/devices", {
+                const res = await axios.get("https://iot-backend-nehg.onrender.com/api/devices", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setDevices(res.data);
@@ -39,7 +39,7 @@ export default function DevicesPage() {
     // 📌 Add Device
     const handleAdd = async () => {
         try {
-            const res = await axios.post("https://localhost:7137/api/devices/add", newDevice, {
+            const res = await axios.post("https://iot-backend-nehg.onrender.com/api/devices/add", newDevice, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setDevices([...devices, res.data]);
@@ -61,7 +61,7 @@ export default function DevicesPage() {
     const handleEdit = async () => {
         try {
             await axios.put(
-                `https://localhost:7137/api/devices/${editDevice.id}`,
+                `https://iot-backend-nehg.onrender.com/api/devices/${editDevice.id}`,
                 editDevice,
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -80,7 +80,7 @@ export default function DevicesPage() {
     const confirmDelete = async () => {
         if (!deleteConfirmId) return;
         try {
-            await axios.delete(`https://localhost:7137/api/devices/${deleteConfirmId}`, {
+            await axios.delete(`https://iot-backend-nehg.onrender.com/api/devices/${deleteConfirmId}`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setDevices(devices.filter((d) => d.id !== deleteConfirmId));

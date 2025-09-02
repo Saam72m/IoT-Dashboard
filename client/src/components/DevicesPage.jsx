@@ -47,9 +47,7 @@ const DeviceModal = ({ isOpen, onClose, onSave, initialData }) => {
     const [batteryLevel, setBatteryLevel] = useState(initialData?.batteryLevel || "");
     const DEVICE_TYPES = ["Sensor", "Camera", "Light", "Thermostat", "Door Lock"];
 
-
     useEffect(() => {
-        // وقتی initialData تغییر کنه فرم هم ریست بشه
         setName(initialData?.name || "");
         setIsOnline(initialData?.isOnline || false);
         setIsOn(initialData?.isOn || false);
@@ -198,42 +196,16 @@ const DevicesPage = () => {
         }
     };
 
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`https://iot-backend-nehg.onrender.com/api/devices/${id}`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setDevices(devices.filter((d) => d.id !== id));
-            showToast("✅ Device deleted successfully", "success");
-        } catch (err) {
-            if (err.response?.status === 401) {
-                localStorage.removeItem("token");
-                showToast("⏳ Please log in again", "error");
-                navigate("/login");
-            } else {
-                showToast("❌ Error deleting device", "error");
-            }
-        }
-    };
-
     const toggleDeviceStatus = async (device) => {
         try {
             await axios.patch(
                 `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/status`,
                 JSON.stringify(!device.isOnline),
-                {
-                    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-                }
+                { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
             );
-            setDevices(devices.map((d) => (d.id === device.id ? { ...d, isOnline: !d.isOnline } : d)));
+            setDevices(devices.map(d => (d.id === device.id ? { ...d, isOnline: !d.isOnline } : d)));
         } catch (err) {
-            if (err.response?.status === 401) {
-                localStorage.removeItem("token");
-                showToast("⏳ Please log in again", "error");
-                navigate("/login");
-            } else {
-                showToast("❌ Error changing Online/Offline status", "error");
-            }
+            showToast("❌ Error changing Online/Offline status", "error");
         }
     };
 
@@ -242,19 +214,23 @@ const DevicesPage = () => {
             await axios.patch(
                 `https://iot-backend-nehg.onrender.com/api/devices/${device.id}/power`,
                 JSON.stringify(!device.isOn),
-                {
-                    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-                }
+                { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } }
             );
-            setDevices(devices.map((d) => (d.id === device.id ? { ...d, isOn: !d.isOn } : d)));
+            setDevices(devices.map(d => (d.id === device.id ? { ...d, isOn: !d.isOn } : d)));
         } catch (err) {
-            if (err.response?.status === 401) {
-                localStorage.removeItem("token");
-                showToast("⏳ Please log in again", "error");
-                navigate("/login");
-            } else {
-                showToast("❌ Error changing On/Off status", "error");
-            }
+            showToast("❌ Error changing On/Off status", "error");
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`https://iot-backend-nehg.onrender.com/api/devices/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setDevices(devices.filter(d => d.id !== id));
+            showToast("✅ Device deleted successfully", "success");
+        } catch {
+            showToast("❌ Error deleting device", "error");
         }
     };
 
@@ -266,8 +242,7 @@ const DevicesPage = () => {
                     deviceData,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
-                // آپدیت فوری در UI با داده کاربر
-                setDevices(devices.map((d) => (d.id === editingDevice.id ? { ...d, ...deviceData } : d)));
+                setDevices(devices.map(d => (d.id === editingDevice.id ? { ...d, ...deviceData } : d)));
                 setEditingDevice(null);
                 showToast("✅ Device updated successfully", "success");
             } else {
@@ -280,21 +255,16 @@ const DevicesPage = () => {
                 showToast("✅ Device added successfully ✅", "success");
             }
             setModalOpen(false);
-        } catch (err) {
-            if (err.response?.status === 401) {
-                localStorage.removeItem("token");
-                showToast("⏳ Please log in again", "error");
-                navigate("/login");
-            } else {
-                showToast("❌ Error saving device", "error");
-            }
+        } catch {
+            showToast("❌ Error saving device", "error");
         }
     };
 
     return (
-        <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4 text-center md:text-left">Devices</h2>
-            <div className="flex justify-center md:justify-start mb-4">
+        <div className="p-4 md:p-6">
+            {/* Header / Mobile menu */}
+            <div className="flex justify-between items-center mb-4 md:mb-6">
+                <h2 className="text-2xl font-bold text-center md:text-left">Devices</h2>
                 <button
                     onClick={() => setModalOpen(true)}
                     className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
@@ -303,7 +273,7 @@ const DevicesPage = () => {
                 </button>
             </div>
 
-            {/* جدول دسکتاپ */}
+            {/* Desktop table */}
             <div className="hidden md:block overflow-x-auto">
                 <table className="min-w-full border">
                     <thead>
@@ -312,7 +282,7 @@ const DevicesPage = () => {
                             <th className="p-2 border">Name</th>
                             <th className="p-2 border">Type</th>
                             <th className="p-2 border">Location</th>
-                            <th className="p-2 border">Sensor Temperature</th>
+                            <th className="p-2 border">Temperature</th>
                             <th className="p-2 border">Battery</th>
                             <th className="p-2 border">Status</th>
                             <th className="p-2 border">On/Off</th>
@@ -336,10 +306,7 @@ const DevicesPage = () => {
                                 </td>
                                 <td className="p-2 border flex justify-center gap-2">
                                     <button
-                                        onClick={() => {
-                                            setEditingDevice(device);
-                                            setModalOpen(true);
-                                        }}
+                                        onClick={() => { setEditingDevice(device); setModalOpen(true); }}
                                         className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
                                     >
                                         Edit
@@ -357,34 +324,29 @@ const DevicesPage = () => {
                 </table>
             </div>
 
-            {/* کارت موبایل */}
-            <div className="md:hidden flex overflow-x-auto gap-3 pb-2">
-                {devices.map((device, index) => (
+            {/* Mobile cards */}
+            <div className="md:hidden flex flex-col gap-3">
+                {devices.map((device) => (
                     <motion.div
                         key={device.id}
-                        className="flex-shrink-0 w-72 border rounded-xl p-4 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white"
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        className="border rounded-xl p-4 shadow-lg bg-white"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3 }}
                     >
                         <div className="flex justify-between items-center mb-2">
-                            <h3 className="font-bold text-lg">{device.name}</h3>
+                            <h3 className="font-bold">{device.name}</h3>
                             <StatusDot isOnline={device.isOnline} />
                         </div>
-                        <div className="text-sm mb-1">
-                            <p>Type: {device.type}</p>
-                            <p>Location: {device.location}</p>
-                            <p>Sensor Temperature: {device.temperature ?? "-"}</p>
-                            <p>Battery: {device.batteryLevel ?? "-"}%</p>
-                        </div>
+                        <p>Type: {device.type}</p>
+                        <p>Location: {device.location}</p>
+                        <p>Temperature: {device.temperature ?? "-"}</p>
+                        <p>Battery: {device.batteryLevel ?? "-"}%</p>
                         <div className="flex justify-between items-center mt-3">
                             <DeviceIcon isOn={device.isOn} onToggle={() => togglePowerStatus(device)} />
                             <div className="flex gap-2">
                                 <button
-                                    onClick={() => {
-                                        setEditingDevice(device);
-                                        setModalOpen(true);
-                                    }}
+                                    onClick={() => { setEditingDevice(device); setModalOpen(true); }}
                                     className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                                 >
                                     Edit
@@ -403,10 +365,7 @@ const DevicesPage = () => {
 
             <DeviceModal
                 isOpen={modalOpen}
-                onClose={() => {
-                    setModalOpen(false);
-                    setEditingDevice(null);
-                }}
+                onClose={() => { setModalOpen(false); setEditingDevice(null); }}
                 onSave={handleSaveDevice}
                 initialData={editingDevice}
             />

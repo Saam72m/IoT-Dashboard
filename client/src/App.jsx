@@ -1,4 +1,5 @@
-﻿import React from "react";
+﻿// App.jsx
+import React, { useState } from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,14 +15,20 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 
 const ProtectedLayout = ({ onLogout }) => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+    };
+
     return (
         <div className="h-screen flex flex-col">
-            {/* بالای صفحه */}
-            <Navbar onLogout={onLogout} />
+            {/* Navbar با دکمه همبرگر موبایل */}
+            <Navbar toggleSidebar={toggleSidebar} />
 
-            {/* سمت چپ + محتوا */}
+            {/* Sidebar + محتوا */}
             <div className="flex flex-1">
-                <Sidebar />
+                <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
                 <div className="flex-1 p-4 overflow-y-auto">
                     <Routes>
                         <Route path="/factory" element={<FactoryPlan />} />
@@ -31,7 +38,7 @@ const ProtectedLayout = ({ onLogout }) => {
                         <Route path="/modern" element={<DevicesPageModern />} />
                         <Route path="/Dashboard" element={<Dashboard />} />
                         <Route path="/settings" element={<div>⚙️ Settings</div>} />
-                        {/* پیش‌فرض: ببره به Sensors */}
+                        {/* پیش‌فرض */}
                         <Route path="*" element={<Navigate to="/devices" replace />} />
                     </Routes>
                 </div>

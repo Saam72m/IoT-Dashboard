@@ -17,3 +17,9 @@ yarn-error.log*
 # OS generated
 .DS_Store
 Thumbs.db
+
+
+# Local database
+*.db
+*.db-shm
+*.db-wal

@@ -14,11 +14,17 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "https://io-t-dashboard-psi.vercel.app",
+            "https://localhost:3000",
+            "http://localhost:3000"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -56,17 +62,42 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+    // اضافه کردن Admin
     if (!db.Users.Any(u => u.Role == "Admin"))
     {
         db.Users.Add(new User
         {
             Username = "admin",
-            Password = "123456", // هش کردن پسورد رو فراموش نکن
+            Password = "123456", // هش کردن پسورد یادت نره
             Role = "Admin"
         });
         db.SaveChanges();
     }
+
+    // ======= Seed ساده دیتابیس Devices =======
+    if (!db.Devices.Any())
+    {
+        var initialDevices = new Device[]
+        {
+            new Device { Name = "Temperature Sensor", Type = "Sensor", Location = "Room 101", IsOnline = true, IsOn = true, Temperature = 22.5, BatteryLevel = 100 },
+            new Device { Name = "Humidity Sensor", Type = "Sensor", Location = "Room 102", IsOnline = true, IsOn = true, Temperature = 26, BatteryLevel = 100 },
+            new Device { Name = "Camera 1", Type = "Camera", Location = "Entrance", IsOnline = true, IsOn = true, Temperature = 28, BatteryLevel = 100 },
+            new Device { Name = "Light 1", Type = "Light", Location = "Hallway", IsOnline = true, IsOn = false, Temperature = 25, BatteryLevel = 89 }
+        };
+
+        db.Devices.AddRange(initialDevices);
+        db.SaveChanges();
+        Console.WriteLine("✅ دیتابیس اولیه Devices پر شد!");
+    }
+    else
+    {
+        Console.WriteLine("ℹ️ دیتابیس Devices قبلا پر شده، چیزی اضافه نشد.");
+    }
 }
+
+
+
+
 
 // فعال کردن Swagger فقط در محیط توسعه (Development)
 if (app.Environment.IsDevelopment())

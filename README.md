@@ -40,10 +40,20 @@ The system allows users to log in securely, manage devices, and visualize sensor
 |-------------|-------------|-------------|
 | ![Dashboard1](https://github.com/user-attachments/assets/2e96c4f4-cb9a-422f-9883-5f6f63cc8e67) | ![Dashboard2](https://github.com/user-attachments/assets/b800b6e7-a2ee-4cd9-b127-49814461e9c5) | ![Dashboard3](https://github.com/user-attachments/assets/0813eb3a-729c-4d69-8f3f-a810033ae8e1) |
 
-## 🔗 Demo Links
+## 🔗 Live Demo
 
-- **Frontend Demo:** [Vercel – IoT Dashboard](https://io-t-dashboard-psi.vercel.app)  
-- **Backend API Demo:** [Render – IoT API](https://iot-backend.onrender.com)
+Check out the live demo here: [IoT Dashboard Demo](https://io-t-dashboard-psi.vercel.app)  
+
+---
+
+## 🧪 Demo Login
+
+Use the following credentials to test the dashboard:
+
+- **Username:** admin  
+- **Password:** 123456  
+
+> ⚠️ Note: For production, change the default credentials.
 
 ---
 
